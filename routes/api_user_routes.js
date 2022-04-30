@@ -9,11 +9,11 @@ router.get('/user/:id', userController.getUser);
 //get all
 router.get('/users', userController.getUsers);
 //add new
-router.post('/add-user', userController.createUser);
+router.post('/user', userController.createUser);
 //delete by id
-router.delete('/delete-user/:id', userController.deleteUser);
+router.delete('/user/:id', userController.deleteUser);
 //update by id
-router.put('/update-user/:id', userController.updateUser);
+router.put('/user/:id', userController.updateUser);
 
 
 module.exports = router;

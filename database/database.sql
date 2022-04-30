@@ -32,7 +32,8 @@ create TABLE public."memory" (
     title VARCHAR(255),
     description VARCHAR(255),
     memory_date DATE,
-    bg_color_id INTEGER
+    location VARCHAR(255),
+    photos_id INTEGER
 );
 
 create TABLE public."special_date" (
@@ -40,8 +41,6 @@ create TABLE public."special_date" (
     couple_id INTEGER,
     FOREIGN KEY (couple_id) REFERENCES "couple" (id),
     title VARCHAR(255),
-    description VARCHAR(255),
     action_date DATE,
-    location VARCHAR(255),
-    photos_id INTEGER
+    bg_color_id INTEGER
 );
