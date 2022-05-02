@@ -1,3 +1,5 @@
+const db = require('../helpers/db');
+
 class ComplimentController {
 
     async getCompliment(req, res) {
@@ -12,7 +14,7 @@ class ComplimentController {
             date,
             text
         } = req.body;
-        const newCompliment = await db.query('INSERT INTO "compliment" (couple_id, show_date, compliment_text) values ($1 ,$2, $3) RETURNING *', [coupleId, date, text]);
+        const newCompliment = await db.query('INSERT INTO "compliment" (couple_id, show_date, compliment_text) values ($1 , $2 , $3) RETURNING *', [coupleId, date, text]);
         res.json(newCompliment.rows[0]);
     }
 }

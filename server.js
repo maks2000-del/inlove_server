@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+var cors = require('cors');
 const methodOverride = require('method-override');
 const apiUserRoutes = require('./routes/api_user_routes');
 const apiCoupleRoutes = require('./routes/api_couple_router');
@@ -23,6 +24,8 @@ app.use(express.urlencoded({
 app.use(express.json());
 
 app.use(methodOverride('_method'));
+
+app.use(cors());
 
 app.get('/', (req, res) => {});
 

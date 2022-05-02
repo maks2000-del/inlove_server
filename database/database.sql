@@ -3,7 +3,7 @@ CREATE TABLE public."user"
     id SERIAL,
     PRIMARY KEY (id),
     name VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     password VARCHAR(255),
     sex VARCHAR(255)
 );

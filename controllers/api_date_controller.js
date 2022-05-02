@@ -1,3 +1,5 @@
+const db = require('../helpers/db');
+
 class DateController {
 
     async getDate(req, res) {

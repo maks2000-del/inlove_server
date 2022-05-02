@@ -1,3 +1,5 @@
+const db = require('../helpers/db');
+
 class MemoryController {
 
     async getMemory(req, res) {

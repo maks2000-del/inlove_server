@@ -1,3 +1,5 @@
+const db = require('../helpers/db');
+
 class CoupleController {
 
     async getCouple(req, res) {
