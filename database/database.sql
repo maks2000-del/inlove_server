@@ -13,7 +13,8 @@ create TABLE public."couple" (
     boy_id INTEGER,
     FOREIGN KEY (boy_id) REFERENCES "user"(id),
     girl_id INTEGER,
-    FOREIGN KEY (girl_id) REFERENCES "user"(id)
+    FOREIGN KEY (girl_id) REFERENCES "user"(id),
+    status VARCHAR(255),
 );
 
 create TABLE public."compliment" (

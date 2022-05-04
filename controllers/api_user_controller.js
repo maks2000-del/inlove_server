@@ -10,63 +10,108 @@ const db = require('../helpers/db');
 class UserController {
 
     async getUser(req, res) {
-        const id = req.params.id;
-        const user = await db.query('SELECT * FROM "user" where id = $1', [id]);
-        res.json(user.rows[0]);
+        try {
+            const id = req.params.id;
+            const user = await db.query('SELECT * FROM "user" where id = $1', [id]);
+            res.json(user.rows[0]);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
+    }
+
+    async getUserByName(req, res) {
+        try {
+            const name = req.params.name;
+            const user = await db.query('SELECT * FROM "user" where name = $1', [name]);
+            res.json(user.rows[0]);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
     }
 
     async getUsers(req, res) {
-        const users = await db.query('SELECT * FROM "user"');
-        res.json(users.rows);
+        try {
+            const users = await db.query('SELECT * FROM "user"');
+            res.json(users.rows);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
     }
 
     async createUser(req, res) {
-        const {
-            name,
-            email,
-            password,
-            sex
-        } = req.body;
-        const newPerson = await db.query('INSERT INTO "user" (name, email, password, sex) values ($1 ,$2, $3, $4) RETURNING *', [name, email, password, sex]);
+        try {
+            const {
+                name,
+                email,
+                password,
+                sex
+            } = req.body;
+            const newPerson = await db.query('INSERT INTO "user" (name, email, password, sex) values ($1 ,$2, $3, $4) RETURNING *', [name, email, password, sex]);
 
-        let status;
-        (newPerson.rows[0].id != undefined) ? status = 'registered': status = 'smt went wrong';
-        const response = {
-            "status": status
-        };
-        res.json(response);
+            let status;
+            (newPerson.rows[0].id != undefined) ? status = 'registered': status = 'smt went wrong';
+            const response = {
+                "status": status
+            };
+            res.json(response);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
     }
 
     async updateUser(req, res) {
-        const {
-            name,
-            email,
-            password,
-            sex
-        } = req.body;
-        const id = req.params.id;
-        const user = await db.query('UPDATE "user" set name = $2, email = $3, password = $4, sex = $5 WHERE id = $1 RETURNING *', [id, name, email, password, sex]);
-        res.json(user.rows[0]);
+        try {
+            const {
+                name,
+                email,
+                password,
+                sex
+            } = req.body;
+            const id = req.params.id;
+            const user = await db.query('UPDATE "user" set name = $2, email = $3, password = $4, sex = $5 WHERE id = $1 RETURNING *', [id, name, email, password, sex]);
+            res.json(user.rows[0]);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
     }
 
     async deleteUser(req, res) {
-        const id = req.params.id;
-        const user = await db.query('DELETE FROM "user" where id = $1', [id]);
-        res.json(user.rows[0]);
+        try {
+            const id = req.params.id;
+            const user = await db.query('DELETE FROM "user" where id = $1', [id]);
+            res.json(user.rows[0]);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
     }
 
     async authUser(req, res) {
-        const {
-            email,
-            password
-        } = req.body;
-        const user = await db.query('SELECT * FROM "user" where email = $1 AND password = $2', [email, password]);
-        let isUserExist;
-        user.rows.length == 1 ? isUserExist = true : isUserExist = false;
-        const response = {
-            "isUserExist": isUserExist
-        };
-        res.json(response);
+        try {
+            const {
+                email,
+                password
+            } = req.body;
+            const user = await db.query('SELECT * FROM "user" where email = $1 AND password = $2', [email, password]);
+            let isUserExist;
+            user.rows.length == 1 ? isUserExist = true : isUserExist = false;
+            const response = {
+                "authStatus": isUserExist,
+                "id": user.rows[0].id,
+                "name": user.rows[0].name,
+                "email": user.rows[0].email,
+                "sex": user.rows[0].sex,
+            };
+            res.json(response);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
     }
 }
 

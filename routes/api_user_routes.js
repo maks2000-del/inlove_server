@@ -6,6 +6,8 @@ const userController = require('../controllers/api_user_controller');
 
 //get by id
 router.get('/user/:id', userController.getUser);
+//get by name
+router.get('/user/name/:name', userController.getUserByName);
 //get all
 router.get('/users', userController.getUsers);
 //add new
