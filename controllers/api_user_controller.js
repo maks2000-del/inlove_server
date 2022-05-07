@@ -100,6 +100,7 @@ class UserController {
             const user = await db.query('SELECT * FROM "user" where email = $1 AND password = $2', [email, password]);
             let isUserExist;
             user.rows.length == 1 ? isUserExist = true : isUserExist = false;
+            //console.log(user.rows);
             const response = {
                 "authStatus": isUserExist,
                 "id": user.rows[0].id,
@@ -109,6 +110,7 @@ class UserController {
             };
             res.json(response);
         } catch (error) {
+            console.log(error);
             res.status(506).send("bd error");
         }
 

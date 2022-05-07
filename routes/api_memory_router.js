@@ -7,7 +7,7 @@ const memoryController = require('../controllers/api_memory_controller');
 //get by id
 router.get('/memory/:id', memoryController.getMemory);
 //get all
-router.get('/memorys', memoryController.getMemorys);
+router.get('/memorys/:coupleId', memoryController.getMemorys);
 //add new
 router.post('/memory', memoryController.createMemory);
 //delete by id

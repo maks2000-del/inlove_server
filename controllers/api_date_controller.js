@@ -16,7 +16,8 @@ class DateController {
 
     async getDates(req, res) {
         try {
-            const dates = await db.query('SELECT * FROM "special_date"');
+            const coupleId = req.params.coupleId;
+            const dates = await db.query('SELECT * FROM "special_date" where couple_id = $1', [coupleId]);
             res.json(dates.rows);
         } catch (error) {
             res.status(506).send("bd error");
@@ -32,9 +33,11 @@ class DateController {
                 actionDate,
                 bgColorId
             } = req.body;
+            
             const newDate = await db.query('INSERT INTO "special_date" (couple_id, title, action_date, bg_color_id) values ($1 ,$2, $3, $4) RETURNING *', [coupleId, title, actionDate, bgColorId]);
             res.json(newDate.rows[0]);
         } catch (error) {
+            console.log(error);
             res.status(506).send("bd error");
         }
 

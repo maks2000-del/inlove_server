@@ -7,7 +7,7 @@ const dateController = require('../controllers//api_date_controller');
 //get by id
 router.get('/date/:id', dateController.getDate);
 //get all
-router.get('/dates', dateController.getDates);
+router.get('/dates/:coupleId', dateController.getDates);
 //add new
 router.post('/date', dateController.createDate);
 //delete by id

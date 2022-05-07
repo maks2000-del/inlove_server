@@ -13,6 +13,17 @@ class ComplimentController {
 
     }
 
+    async getComplimentByCoupleId(req, res) {
+        try {
+            const id = req.params.id;
+            const compliment = await db.query('SELECT * FROM "compliment" where couple_id = $1', [id]);
+            res.json(compliment.rows[0]);
+        } catch (error) {
+            res.status(506).send("bd error");
+        }
+
+    }
+
     async createCompliment(req, res) {
         try {
             const {

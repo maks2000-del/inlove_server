@@ -15,7 +15,8 @@ class MemoryController {
 
     async getMemorys(req, res) {
         try {
-            const memorys = await db.query('SELECT * FROM "memory"');
+            const coupleId = req.params.coupleId;
+            const memorys = await db.query('SELECT * FROM "memory" where couple_id = $1', [coupleId]);
             res.json(memorys.rows);
         } catch (error) {
             res.status(506).send("bd error");
@@ -29,11 +30,11 @@ class MemoryController {
                 coupleId,
                 title,
                 description,
-                memoryDate,
+                date,
                 location,
                 photosId
             } = req.body;
-            const newMemory = await db.query('INSERT INTO "memory" (couple_id, title, description, memory_date, location, photos_id) values ($1 ,$2, $3, $4, $5, $6) RETURNING *', [coupleId, title, description, memoryDate, location, photosId]);
+            const newMemory = await db.query('INSERT INTO "memory" (couple_id, title, description, memory_date, location, photos_id) values ($1 ,$2, $3, $4, $5, $6) RETURNING *', [coupleId, title, description, date, location, photosId]);
             res.json(newMemory.rows[0]);
         } catch (error) {
             res.status(506).send("bd error");
