@@ -22,7 +22,8 @@ create TABLE public."compliment" (
     couple_id INTEGER,
     FOREIGN KEY (couple_id) REFERENCES "couple" (id),
     show_date DATE,
-    compliment_text VARCHAR(255)
+    compliment_text VARCHAR(255),
+    
 );
 
 
