@@ -22,7 +22,11 @@ class CoupleController {
         try {
             const userId = req.params.userId;
             const couple = await db.query('SELECT * FROM "couple" where boy_id = $1 OR girl_id =$1', [userId]);
-            res.json(couple.rows[0]);
+            if (couple.rows.length === 0) {
+                res.status(404).send('no couple with this user');
+            } else {
+                res.json(couple.rows[0]);
+            }
         } catch (error) {
             res.status(506).send("bd error");
         }

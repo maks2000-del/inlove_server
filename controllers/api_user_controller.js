@@ -33,14 +33,22 @@ class UserController {
 
     async getUsers(req, res) {
         try {
-            const users = await db.query('SELECT * FROM "user"');
+            const users = await db.query(`
+            select "user".id, "user".name from "user"
+            EXCEPT (
+            SELECT "user".id, "user".name
+            FROM "user"
+            INNER JOIN "couple" ON "user".id = "couple".boy_id where "couple".status = 'accepted' UNION
+            SELECT "user".id, "user".name
+            FROM "user"
+            INNER JOIN "couple" ON "user".id = "couple".girl_id where "couple".status = 'accepted')
+            `);
             res.json(users.rows);
         } catch (error) {
             res.status(506).send("bd error");
         }
 
     }
-
     async createUser(req, res) {
         try {
             const {
