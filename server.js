@@ -3,7 +3,6 @@ const morgan = require('morgan');
 const multer = require('multer');
 const path = require('path');
 var cors = require('cors');
-const methodOverride = require('method-override');
 const apiUserRoutes = require('./routes/api_user_routes');
 const apiCoupleRoutes = require('./routes/api_couple_router');
 const apiMemoryRoutes = require('./routes/api_memory_router');
@@ -36,7 +35,9 @@ app.use(express.json());
 app.use(cors());
 
 
-app.get('/', (req, res) => {});
+app.get('/', (req, res) => {
+    res.send('hello world')
+});
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -50,7 +51,10 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage
 })
+
 app.post('/upload', upload.single('myFile'));
+
+app.post('/profile-upload-single', upload.single('profile-file'));
 
 app.use('/api', apiUserRoutes);
 app.use('/api', apiComplimentRoutes);
